@@ -1,5 +1,9 @@
 require("dotenv").config();
 var keys = require("./keys.js");
+const concert= require("./commands/concert-this.js")
+const doWhatItSays= require("./commands/do-what-it-says.js")
+const movieThis= require("./commands/movie-this.js")
+const spotify= require("./commands/spotify.js")
 
 // liri commands
 // 'concert-this'
@@ -22,9 +26,9 @@ switch(process.argv[2]){
         break;
     default:
         console.log(`I'm sorry, I dont know what you just said. Try running the program with one of the following:`);
-        console.log(`'concert-this'`);
-        console.log(`'spotify'`);
-        console.log(`'movie-this'`);
+        console.log(`'concert-this' <Artist/Band>`);
+        console.log(`'spotify' <Song>`);
+        console.log(`'movie-this' <Movie>`);
         console.log(`'do-what-it-says'`);
         break;
 }
