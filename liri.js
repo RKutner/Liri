@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require('axios')
 var keys = require("./keys.js");
+const moment = require('moment')
 // const concert= require("./commands/concert-this.js")
 // const doWhatItSays= require("./commands/do-what-it-says.js")
 // const movieThis= require("./commands/movie-this.js")
@@ -10,11 +11,15 @@ var keys = require("./keys.js");
 switch (process.argv[2]) {
     case 'concert-this':
         const band = process.argv[3];
-        axios.get(`"https://rest.bandsintown.com/artists/${band}/events?app_id=codingbootcamp"`).then(
+        const queryURL= `https://rest.bandsintown.com/artists/${band}/events?app_id=codingbootcamp`;
+        axios.get(queryURL).then(
             function (response) {
-                console.log(response);
-            }
-        )
+                console.log("Shows")
+                for (let i=0; i<10; i++){
+                console.log(response.data[i].venue.name);
+                console.log(response.data[i].venue.city);
+                console.log(moment(response.data[i].datetime).format("MM/DD/YYYY")) +'\n';
+            }});
         break;
     case 'spotify':
         console.log("spotify");
