@@ -1,7 +1,9 @@
 require("dotenv").config();
 const axios = require('axios')
-var keys = require("./keys.js");
-const moment = require('moment')
+const keys = require("./keys.js");
+const moment = require('moment');
+const Spotify = require('node-spotify-api');
+
 // const concert= require("./commands/concert-this.js")
 // const doWhatItSays= require("./commands/do-what-it-says.js")
 // const movieThis= require("./commands/movie-this.js")
@@ -11,18 +13,30 @@ const moment = require('moment')
 switch (process.argv[2]) {
     case 'concert-this':
         const band = process.argv[3];
-        const queryURL= `https://rest.bandsintown.com/artists/${band}/events?app_id=codingbootcamp`;
+        const queryURL = `https://rest.bandsintown.com/artists/${band}/events?app_id=codingbootcamp`;
         axios.get(queryURL).then(
             function (response) {
                 console.log("Shows")
-                for (let i=0; i<10; i++){
-                console.log(response.data[i].venue.name);
-                console.log(response.data[i].venue.city);
-                console.log(moment(response.data[i].datetime).format("MM/DD/YYYY")) +'\n';
-            }});
+                for (let i = 0; i < 10; i++) {
+                    console.log(response.data[i].venue.name);
+                    console.log(response.data[i].venue.city);
+                    console.log(moment(response.data[i].datetime).format("MM/DD/YYYY")) + '\n';
+                }
+            });
         break;
     case 'spotify':
-        console.log("spotify");
+        // const spotify = new Spotify({
+        //     id: keys.id,
+        //     secret: keys.secret
+        // });
+        // spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
+        //     if (err) {
+        //         return console.log('Error occurred: ' + err);
+        //     }
+
+        //     console.log(data);
+        // });
+console.log(keys)
         break;
     case 'movie-this':
         const title = process.argv[3];
