@@ -2,13 +2,7 @@ require("dotenv").config();
 const axios = require('axios')
 const keys = require("./keys.js");
 const moment = require('moment');
-const Spotify = require('node-spotify-api');
-
-// const concert= require("./commands/concert-this.js")
-// const doWhatItSays= require("./commands/do-what-it-says.js")
-// const movieThis= require("./commands/movie-this.js")
-// const spotify= require("./commands/spotify.js")
-
+const fs = require('fs');
 
 switch (process.argv[2]) {
     case 'concert-this':
@@ -24,19 +18,25 @@ switch (process.argv[2]) {
                 }
             });
         break;
-    case 'spotify':
-        // const spotify = new Spotify({
-        //     id: keys.id,
-        //     secret: keys.secret
-        // });
-        // spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
-        //     if (err) {
-        //         return console.log('Error occurred: ' + err);
-        //     }
-
-        //     console.log(data);
-        // });
-console.log(keys)
+    case 'spotify-this-song':
+        let song= process.argv[3];
+        var Spotify = require('node-spotify-api');
+ 
+        var spotify = new Spotify({
+          id: "f989fcb4827740b08a01828a32562965",
+          secret: "f7b95fa6f44e4153b7a48222053afa6c"
+        });
+         
+        spotify.search({ type: 'track', query: song }, function(err, data) {
+          if (err) {
+            return console.log('Error occurred: ' + err);
+          }
+         
+        console.log("Song: ", data.tracks.items[0].album.artists[0].name); 
+        console.log("Artist: ", data.tracks.items[0].album.artists[0].name); 
+        console.log("Album: ", data.tracks.items[0].album.name); 
+        console.log("Preview link: ", data.tracks.items[0].preview_url); 
+        });
         break;
     case 'movie-this':
         const title = process.argv[3];
@@ -55,12 +55,33 @@ console.log(keys)
             });
         break;
     case 'do-what-it-says':
-        console.log('dowhatitsays');
+            fs.readFile("./random.txt", "utf8", function(error, data){
+                if (error) {
+                    return console.log(error);
+                  }
+                  var Spotify = require('node-spotify-api');
+       
+                  var spotify = new Spotify({
+                    id: "f989fcb4827740b08a01828a32562965",
+                    secret: "f7b95fa6f44e4153b7a48222053afa6c"
+                  });
+                  let song=data.split(",")[1]
+                  spotify.search({ type: 'track', query: song }, function(err, data) {
+                      if (err) {
+                        return console.log('Error occurred: ' + err);
+                      }
+                     
+                    console.log("Song: ", data.tracks.items[0].album.artists[0].name); 
+                    console.log("Artist: ", data.tracks.items[0].album.artists[0].name); 
+                    console.log("Album: ", data.tracks.items[0].album.name); 
+                    console.log("Preview link: ", data.tracks.items[0].preview_url); 
+                    });
+            })
         break;
     default:
         console.log(`I'm sorry, I dont know what you just said. Try running the program with one of the following:`);
         console.log(`'concert-this' <Artist/Band>`);
-        console.log(`'spotify' <Song>`);
+        console.log(`'spotify-this-song' <Song>`);
         console.log(`'movie-this' <Movie>`);
         console.log(`'do-what-it-says'`);
         break;
