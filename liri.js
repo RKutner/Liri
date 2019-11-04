@@ -32,7 +32,7 @@ switch (process.argv[2]) {
             return console.log('Error occurred: ' + err);
           }
          
-        console.log("Song: ", data.tracks.items[0].album.artists[0].name); 
+        console.log("Song: ", song); 
         console.log("Artist: ", data.tracks.items[0].album.artists[0].name); 
         console.log("Album: ", data.tracks.items[0].album.name); 
         console.log("Preview link: ", data.tracks.items[0].preview_url); 
@@ -50,8 +50,6 @@ switch (process.argv[2]) {
                 console.log('Language:', response.data.Language);
                 console.log('Plot:', response.data.Plot);
                 console.log('Cast:', response.data.Actors);
-
-
             });
         break;
     case 'do-what-it-says':
@@ -71,7 +69,7 @@ switch (process.argv[2]) {
                         return console.log('Error occurred: ' + err);
                       }
                      
-                    console.log("Song: ", data.tracks.items[0].album.artists[0].name); 
+                    console.log("Song: ", song); 
                     console.log("Artist: ", data.tracks.items[0].album.artists[0].name); 
                     console.log("Album: ", data.tracks.items[0].album.name); 
                     console.log("Preview link: ", data.tracks.items[0].preview_url); 
